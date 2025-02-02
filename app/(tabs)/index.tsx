@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -6,6 +7,20 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+  const [count, setCount] = React.useState(0);
+  const testName = "test";
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCount(prevCount => {
+        console.log('Timer tick:', prevCount + 1); // 디버깅용 로그
+        return prevCount + 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+  
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -18,9 +33,10 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
+        <ThemedText>Counter: {count}</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+        <ThemedText type="subtitle">Step 1: {testName} it</ThemedText>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
